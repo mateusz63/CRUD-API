@@ -1,0 +1,24 @@
+from flask import Flask
+from flask_restful import Resource, Api, reqparse
+
+app = Flask(__name__)
+api = Api(app)
+parser = reqparse.RequestParser()
+parser.add_argument('name', type=str, help='Name of the resource')
+
+class HelloWorld(Resource):
+    def get(self):
+        return {'message': 'Hello, World!'}
+
+class Greet(Resource):
+    def get(self, name):
+        return {'message': f'Hello, {name}!'}
+
+class ResourceExample(Resource):
+    def post(self):
+        args = parser.parse_args()
+        name = args['name']
+        return {'name': name}
+
+api.add_resource(HelloWorld, '/')
+api.add
